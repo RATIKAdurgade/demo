@@ -9,7 +9,7 @@ podTemplate(label: 'notejam-build',
     ),
     containerTemplate(
       name: 'docker',
-      image: '15911685446.dkr.ecr.us-east-1.amazonaws.com/dnd-image:latest4',
+      image: '15911685446.dkr.ecr.us-east-1.amazonaws.com/dnd-image:latest',
       alwaysPullImage: true,
       command: 'cat',
       ttyEnabled: true
