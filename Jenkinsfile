@@ -9,7 +9,7 @@ podTemplate(label: 'notejam-build',
     ),
     containerTemplate(
       name: 'docker',
-      image: 'docker:dind',
+      image: 'docker:18.09.9-dind',
       alwaysPullImage: true,
       ttyEnabled: true,
       privileged: true
