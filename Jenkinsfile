@@ -9,10 +9,11 @@ podTemplate(label: 'notejam-build',
     ),
     containerTemplate(
       name: 'docker',
-      image: '415911685446.dkr.ecr.us-east-1.amazonaws.com/dnd-image:latest',
+      image: 'docker:dind',
       alwaysPullImage: true,
       command: 'cat',
-      ttyEnabled: true
+      ttyEnabled: true,
+      privileged: true
     ),
     containerTemplate(
       name: 'rails',
@@ -23,7 +24,6 @@ podTemplate(label: 'notejam-build',
     ),
   ],
   volumes: [ 
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), 
     emptyDirVolume(mountPath: '/usr/local/bundle', memory: false)
   ],
   imagePullSecrets: ['demo-jenkins-pull-secret']
