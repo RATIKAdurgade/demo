@@ -9,10 +9,10 @@ podTemplate(label: 'notejam-build',
     ),
     containerTemplate(
       name: 'docker',
-      image: 'docker:20.10.0-dind-rootless',
+      image: 'docker:20.10.2-dind-rootless',
       alwaysPullImage: true,
-      ttyEnabled: true,
-      privileged: true
+      command: 'cat',
+      ttyEnabled: true
     ),
     containerTemplate(
       name: 'rails',
@@ -25,10 +25,7 @@ podTemplate(label: 'notejam-build',
   volumes: [ 
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), 
   ],
-  imagePullSecrets: ['demo-jenkins-pull-secret'],
-  volumes: [ 
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-  ]
+  imagePullSecrets: ['demo-jenkins-pull-secret']
 )
 {
   node ('notejam-build') {
@@ -66,12 +63,6 @@ podTemplate(label: 'notejam-build',
           sh '''
             ls -alr
             pwd
-            apk update
-            apk add make git curl bash
-            curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-            chmod +x ./kubectl
-            mv ./kubectl /bin/kubectl
-            curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash && mv kustomize /bin
             docker info;
             docker login --username $USERNAME --password $PASSWORD 415911685446.dkr.ecr.us-east-1.amazonaws.com
             make docker-build
