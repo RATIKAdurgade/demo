@@ -23,7 +23,7 @@ spec:
           command: ["/bin/sh", "-xc"]
           args:
             [
-              "cp -av /config/* /usr/src/app/config && cd /usr/src/app && rails server -b 0.0.0.0",
+              "set -x && cat /config/database.yml > /usr/src/app/config/database.yml && cd /usr/src/app && rails server -b 0.0.0.0",
             ]
           volumeMounts:
             - name: database
