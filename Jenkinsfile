@@ -3,20 +3,20 @@ podTemplate(label: 'notejam-build',
   containers: [
     containerTemplate(
       name: 'jnlp',
-      image: 'docker.opsinfra.org/demo/jnlp-image:latest',
+      image: '415911685446.dkr.ecr.us-east-1.amazonaws.com/jnlp-image:latest',
       alwaysPullImage: true,
       args: '${computer.jnlpmac} ${computer.name}'
     ),
     containerTemplate(
       name: 'docker',
-      image: 'docker.opsinfra.org/demo/dnd-image:latest',
+      image: '415911685446.dkr.ecr.us-east-1.amazonaws.com/dnd-image:latest',
       alwaysPullImage: true,
       command: 'cat',
       ttyEnabled: true
     ),
     containerTemplate(
       name: 'rails',
-      image: 'docker.opsinfra.org/demo/rails-image:latest',
+      image: '415911685446.dkr.ecr.us-east-1.amazonaws.com/rails-image:latest',
       alwaysPullImage: true,
       command: 'sh -c "while true; do sleep 15 ; done"',
       ttyEnabled: true
@@ -64,7 +64,7 @@ podTemplate(label: 'notejam-build',
             ls -alr
             pwd
             docker info;
-            docker login --username $USERNAME --password $PASSWORD  docker.opsinfra.org
+            docker login --username $USERNAME --password $PASSWORD 415911685446.dkr.ecr.us-east-1.amazonaws.com
             make docker-build
             make docker-push
             '''
