@@ -16,14 +16,16 @@ spec:
         app: notejam
     spec:
       imagePullSecrets:
-       - name: demo-jenkins-pull-secret
+        - name: demo-jenkins-pull-secret
       containers:
         - name: notejam
           image: notejam:latest
+          command: ["/bin/sh", "-c"]
+          args: ["cd /usr/src/app && rails server -b 0.0.0.0"]
           volumeMounts:
-          - name: database
-            mountPath: "/usr/src/app/config"
-            readOnly: true
+            - name: database
+              mountPath: "/usr/src/app/config"
+              readOnly: true
           ports:
             - containerPort: 3000
           resources:
@@ -34,6 +36,6 @@ spec:
               memory: "2Gi"
               cpu: "1000m"
       volumes:
-      - name: database
-        secret:
-          secretName: database.secret
+        - name: database
+          secret:
+            secretName: database.secret
