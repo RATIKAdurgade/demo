@@ -7,7 +7,7 @@ metadata:
     app: notejam
 spec:
   rules:
-  - host: "notejam.xingnet.org"
+  - host: "notejam.opsinfra.org"
     http:
       paths:
       - path: "/"
