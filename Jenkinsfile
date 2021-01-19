@@ -1,31 +1,40 @@
 #!/usr/bin/groovy
-podTemplate(label: 'notejam-build', 
-  containers: [
-    containerTemplate(
-      name: 'jnlp',
-      image: '415911685446.dkr.ecr.us-east-1.amazonaws.com/jnlp-image:latest',
-      alwaysPullImage: true,
-      args: '${computer.jnlpmac} ${computer.name}'
-    ),
-    containerTemplate(
-      name: 'docker',
-      image: '15911685446.dkr.ecr.us-east-1.amazonaws.com/dnd-image:latest4',
-      alwaysPullImage: true,
-      command: 'cat',
-      ttyEnabled: true
-    ),
-    containerTemplate(
-      name: 'rails',
-      image: '415911685446.dkr.ecr.us-east-1.amazonaws.com/rails-image:latest',
-      alwaysPullImage: true,
-      command: 'sh -c "while true; do sleep 15 ; done"',
-      ttyEnabled: true
-    ),
-  ],
-  volumes: [ 
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), 
-  ],
-  imagePullSecrets: ['demo-jenkins-pull-secret']
+podTemplate(yaml: '''
+apiVersion: v1
+kind: Pod
+spec:
+  imagePullSecrets:
+    - name: demo-jenkins-pull-secret
+  containers:
+  - name: jnlp
+    image: 415911685446.dkr.ecr.us-east-1.amazonaws.com/jnlp-image:latest
+    args: ['\${computer.jnlpmac}','\${computer.name}']
+  - name: docker
+    image: docker:19.03.1-dind
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: docker-socket
+      mountPath: /var/run
+    - name: gems
+      mountPath: /usr/local/bundle
+  - name: rails
+    image: 415911685446.dkr.ecr.us-east-1.amazonaws.com/rails-image:latest
+    command:
+    - cat
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: docker-socket
+      mountPath: /var/run
+    - name: gems
+      mountPath: /usr/local/bundle
+  volumes:
+  - name: docker-socket
+    emptyDir: {}
+  - name: gems
+    emptyDir: {}
+'''
 )
 {
   node ('notejam-build') {
