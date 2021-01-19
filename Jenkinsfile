@@ -24,7 +24,7 @@ podTemplate(label: 'notejam-build',
   ],
   volumes: [ 
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), 
-    hostPathVolume(mountPath: '/usr/local/bundle',memory: true)
+    hostPathVolume(mountPath: '/usr/local/bundle', memory: true)
   ],
   imagePullSecrets: ['demo-jenkins-pull-secret']
 )
