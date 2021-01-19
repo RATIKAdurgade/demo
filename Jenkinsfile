@@ -63,6 +63,12 @@ podTemplate(label: 'notejam-build',
         container('docker') {
           dir("${env.WORKSPACE}"){
           sh '''
+            apk update
+            apk add make git curl bash
+            curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x ./kubectl
+            mv ./kubectl /bin/kubectl
+            curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash && mv kustomize /bin
             df -h
             ls -al /usr/local/bundle
             ls -alr
