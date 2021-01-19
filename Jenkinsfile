@@ -9,10 +9,10 @@ podTemplate(label: 'notejam-build',
     ),
     containerTemplate(
       name: 'docker',
-      image: '415911685446.dkr.ecr.us-east-1.amazonaws.com/dnd-image:latest',
+      image: 'docker:20.10.0-dind-rootless',
       alwaysPullImage: true,
-      command: 'cat',
-      ttyEnabled: true
+      ttyEnabled: true,
+      privileged: true
     ),
     containerTemplate(
       name: 'rails',
