@@ -20,8 +20,11 @@ spec:
       containers:
         - name: notejam
           image: notejam:latest
-          command: ["/bin/sh", "-c"]
-          args: ["cp -av /config/* /usr/src/app/config && cd /usr/src/app && rails server -b 0.0.0.0"]
+          command: ["/bin/sh", "-xc"]
+          args:
+            [
+              "cp -av /config/* /usr/src/app/config && cd /usr/src/app && rails server -b 0.0.0.0",
+            ]
           volumeMounts:
             - name: database
               mountPath: "/config"
