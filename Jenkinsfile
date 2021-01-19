@@ -24,7 +24,7 @@ podTemplate(label: 'notejam-build',
   ],
   volumes: [ 
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), 
-    emptyDirVolume(mountPath: '/usr/local/bundle', memory: true)
+    emptyDirVolume(mountPath: '/usr/local/bundle', memory: false)
   ],
   imagePullSecrets: ['demo-jenkins-pull-secret']
 )
@@ -36,9 +36,11 @@ podTemplate(label: 'notejam-build',
         container('rails') {
           dir("${env.WORKSPACE}"){
           sh '''
-            ls -alr
+            df -h
+            ls -al /usr/local/bundle
             pwd
             make build
+            ls -al /usr/local/bundle
             '''
           }
         }
@@ -62,6 +64,8 @@ podTemplate(label: 'notejam-build',
         container('docker') {
           dir("${env.WORKSPACE}"){
           sh '''
+            df -h
+            ls -al /usr/local/bundle
             ls -alr
             pwd
             docker info;
