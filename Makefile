@@ -8,7 +8,7 @@ test:
 
 docker-build:
 	@echo "[ > ] Building docker image"
-	@set -x; cp -a /usr/local/bundle /tmp
+	@set -x; cp -a /usr/local/bundle /home/jenkins/agent/workspace/notejam
 	@set -x; export TAG=`git rev-parse --short HEAD`;docker build -t 415911685446.dkr.ecr.us-east-1.amazonaws.com/notejam:$$TAG-$$BUILD_ID .
 docker-push:
 	@echo "[ > ] Pushing docker image"
