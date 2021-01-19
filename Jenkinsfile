@@ -11,7 +11,6 @@ podTemplate(label: 'notejam-build',
       name: 'docker',
       image: 'docker:dind',
       alwaysPullImage: true,
-      command: 'cat',
       ttyEnabled: true,
       privileged: true
     ),
