@@ -11,10 +11,10 @@ FROM rails:4.2.5
 # COPY /usr/local/bundle/extensions /usr/local/bundle/extensions
 # COPY /usr/local/bundle/gems /usr/local/bundle/gems
 # COPY /usr/local/bundle/specifications /usr/local/bundle/specifications
-ADD /usr/local/bundle /usr/local/bundle
+# ADD /usr/local/bundle /usr/local/bundle
 WORKDIR /usr/src/app
 COPY src/Gemfile* ./
-RUN bundle install --local
+RUN bundle install
 COPY src/. .
 
 EXPOSE 3000
