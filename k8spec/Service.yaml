@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notejam-svc
+  namespace: notejam-ns
+  labels:
+    app: notejam
+spec:
+  ports:
+    - port: 8080
+      targetPort: 3000
+  type: ClusterIP
+  selector:
+    app: notejam

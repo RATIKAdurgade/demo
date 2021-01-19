@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notejam-dep
+  namespace: notejam-ns
+  labels:
+    app: notejam
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: notejam
+  template:
+    metadata:
+      labels:
+        app: notejam
+    spec:
+      imagePullSecrets:
+       - name: demo-jenkins-pull-secret
+      containers:
+        - name: notejam
+          image: notejam:latest
+          volumeMounts:
+          - name: database
+            mountPath: "/usr/src/app/config"
+            readOnly: true
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+      volumes:
+      - name: database
+        secret:
+          secretName: database.secret

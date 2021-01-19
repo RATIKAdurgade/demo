@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: notejam-ing
+  namespace: notejam-ns
+  labels:
+    app: notejam
+spec:
+  rules:
+  - host: "notejam.xingnet.org"
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: notejam-svc
+          servicePort: 8080
